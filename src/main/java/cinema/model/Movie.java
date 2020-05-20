@@ -9,9 +9,9 @@ import javax.persistence.Id;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String title;
-    String description;
+    private Long id;
+    private String title;
+    private String description;
 
     public Long getId() {
         return id;

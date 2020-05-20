@@ -11,7 +11,6 @@ import java.util.List;
 public class MovieServiceImpl implements MovieService {
     @Inject
     private MovieDao movieDao;
-    //private MovieDao movieDao = new MovieDaoImpl();
 
     @Override
     public Movie add(Movie movie) {

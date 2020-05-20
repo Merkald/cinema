@@ -7,22 +7,20 @@ import cinema.model.Movie;
 import cinema.util.HibernateUtil;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
-    private static final Logger LOGGER = Logger.getLogger(MovieDaoImpl.class);
 
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Long itemId = (Long) session.save(movie);
+            Long movieId = (Long) session.save(movie);
             transaction.commit();
-            movie.setId(itemId);
+            movie.setId(movieId);
             return movie;
         } catch (Exception e) {
             if (transaction != null) {
