@@ -1,8 +1,9 @@
 package cinema.dao.impl;
 
-import cinema.dao.MovieDao;
+import cinema.dao.CinemaHallDao;
 import cinema.exeptions.DataProcessingException;
 import cinema.lib.Dao;
+import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.util.HibernateUtil;
 import java.util.List;
@@ -11,33 +12,33 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
-public class MovieDaoImpl implements MovieDao {
+public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
-    public Movie add(Movie movie) {
+    public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(movie);
+            session.save(cinemaHall);
             transaction.commit();
-            return movie;
+            return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cant insert movie entity", e);
+            throw new RuntimeException("Can't insert Cinema Hall", e);
         }
     }
 
     @Override
-    public List<Movie> getAll() {
+    public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            CriteriaQuery<Movie> criteriaQuery = session.getCriteriaBuilder()
-                    .createQuery(Movie.class);
+            CriteriaQuery<CinemaHall> criteriaQuery = session.getCriteriaBuilder()
+                    .createQuery(CinemaHall.class);
             criteriaQuery.from(Movie.class);
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Error reviewing all movies", e);
+            throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         }
     }
 }
