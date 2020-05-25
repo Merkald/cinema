@@ -1,7 +1,7 @@
 package cinema.exeptions;
 
-public class AuthenticationExeption extends RuntimeException {
-    public AuthenticationExeption(String message, Throwable throwable) {
-        super(message, throwable);
+public class AuthenticationExeption extends Exception {
+    public AuthenticationExeption(String message) {
+        super(message);
     }
 }

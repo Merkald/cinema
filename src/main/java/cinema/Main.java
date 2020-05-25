@@ -13,9 +13,10 @@ import cinema.service.MovieSessionService;
 import cinema.service.UserService;
 import cinema.service.impl.AuthenticationServiceImpl;
 import java.time.LocalDateTime;
-import javax.naming.AuthenticationException;
+import org.apache.log4j.Logger;
 
 public class Main {
+    private static Logger logger = Logger.getLogger(Main.class);
     private static final Injector INJECTOR = Injector.getInstance("cinema");
 
     public static void main(String[] args) {
@@ -29,14 +30,14 @@ public class Main {
             try {
                 user = authenticationService.login(user.getEmail(), password + i);
                 System.out.println(user);
-            } catch (AuthenticationException e) {
-                throw new AuthenticationExeption("cant login", e);
+            } catch (AuthenticationExeption e) {
+                logger.warn("Cant login. Passwords are not equals", e);
             }
         }
         try {
             authenticationService.login(email + 1, password);
-        } catch (AuthenticationException e) {
-            throw new AuthenticationExeption("cant login", e);
+        } catch (AuthenticationExeption e) {
+            logger.warn("Cant login. Passwords are not equals", e);
         }
     }
 

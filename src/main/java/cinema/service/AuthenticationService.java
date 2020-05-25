@@ -1,10 +1,10 @@
 package cinema.service;
 
+import cinema.exeptions.AuthenticationExeption;
 import cinema.model.User;
-import javax.naming.AuthenticationException;
 
 public interface AuthenticationService {
-    User login(String email, String password) throws AuthenticationException;
+    User login(String email, String password) throws AuthenticationExeption;
 
     User register(String email, String password);
 }
