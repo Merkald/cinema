@@ -9,7 +9,7 @@ import cinema.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
     @Inject
-    UserDao userDao;
+    private UserDao userDao;
 
     @Override
     public User add(User user) {

@@ -23,10 +23,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User register(String email, String password) {
-        User user = new User()
-                .email(email)
-                .salt(HashUtil.getSalt());
-        return userService.add(user
-                .password(HashUtil.hashPassword(password, user.getSalt())));
+        User user = new User();
+        user.setEmail(email);
+        user.setSalt(HashUtil.getSalt());
+        user.setPassword(HashUtil.hashPassword(password, user.getSalt()));
+        return userService.add(user);
     }
 }

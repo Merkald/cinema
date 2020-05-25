@@ -13,7 +13,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User add(User user) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
@@ -23,18 +24,22 @@ public class UserDaoImpl implements UserDao {
                 transaction.rollback();
             }
             throw new RuntimeException("Cant insert User entity", e);
+        } finally {
+            session.close();
         }
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            return Optional.ofNullable((User) session
                     .createQuery("from User where email = :email")
-                    .setParameter("email", email).list().stream()
-                    .findFirst();
+                    .setParameter("email", email).uniqueResult());
         } catch (Exception e) {
             throw new RuntimeException("Can't get User ", e);
+        } finally {
+            session.close();
         }
     }
 }
