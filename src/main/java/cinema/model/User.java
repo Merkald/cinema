@@ -112,12 +112,12 @@ public class User {
         User user = (User) o;
         return age == user.getAge()
                 && userId.equals(user.getUserId())
-                && firstName.equals(user.getFirstName())
-                && lastName.equals(user.getLastName())
-                && login.equals(user.getLogin())
-                && email.equals(user.getEmail())
-                && Objects.equals(phone, user.getPhone())
-                && password.equals(user.getPassword());
+                && firstName.equals(user.firstName)
+                && lastName.equals(user.lastName)
+                && login.equals(user.login)
+                && email.equals(user.email)
+                && Objects.equals(phone, user.phone)
+                && password.equals(user.password);
     }
 
     @Override

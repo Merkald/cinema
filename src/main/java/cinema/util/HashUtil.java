@@ -1,5 +1,6 @@
 package cinema.util;
 
+import cinema.exeptions.AuthenticationExeption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -26,7 +27,7 @@ public class HashUtil {
                 hashedPassword.append(String.format("%02x", b));
             }
         } catch (NoSuchAlgorithmException e) {
-            logger.error(e);
+            throw new AuthenticationExeption("Can't create hashing password ", e);
         }
         return hashedPassword.toString();
     }
