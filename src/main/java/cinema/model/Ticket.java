@@ -10,11 +10,11 @@ import javax.persistence.ManyToOne;
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @ManyToOne
-    MovieSession movieSession;
+    private MovieSession movieSession;
     @ManyToOne
-    User user;
+    private User user;
 
     public Long getId() {
         return id;

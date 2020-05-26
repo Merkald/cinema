@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -16,11 +17,12 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private List<Ticket> tickets;
     private LocalDateTime orderDate;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @MapsId
+    @JoinColumn
     private User user;
 
     public Long getId() {

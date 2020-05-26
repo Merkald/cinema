@@ -5,9 +5,9 @@ import cinema.lib.Dao;
 import cinema.model.ShoppingCart;
 import cinema.model.User;
 import cinema.util.HibernateUtil;
-import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -41,10 +41,11 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<ShoppingCart> cr = cb.createQuery(ShoppingCart.class);
             Root<ShoppingCart> root = cr.from(ShoppingCart.class);
+            root.fetch("tickets", JoinType.LEFT);
+            root.fetch("user", JoinType.LEFT);
             cr.select(root).where(cb.equal(root.get("user"), user));
             Query<ShoppingCart> query = session.createQuery(cr);
-            List<ShoppingCart> results = query.getResultList();
-            return results.stream().findFirst().orElseThrow();
+            return query.uniqueResult();
         } catch (Exception e) {
             throw new RuntimeException("Cant insert Shopping Cart entity", e);
         } finally {
