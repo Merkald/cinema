@@ -1,47 +1,43 @@
 package cinema.dao.impl;
 
-import cinema.dao.MovieDao;
-import cinema.exeptions.DataProcessingException;
+import cinema.dao.UserDao;
 import cinema.lib.Dao;
-import cinema.model.Movie;
+import cinema.model.User;
 import cinema.util.HibernateUtil;
-import java.util.List;
-import javax.persistence.criteria.CriteriaQuery;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
-public class MovieDaoImpl implements MovieDao {
-
+public class UserDaoImpl implements UserDao {
     @Override
-    public Movie add(Movie movie) {
+    public User add(User user) {
         Transaction transaction = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            session.save(movie);
+            session.save(user);
             transaction.commit();
-            return movie;
+            return user;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cant insert movie entity", e);
+            throw new RuntimeException("Cant insert User entity", e);
         } finally {
             session.close();
         }
     }
 
     @Override
-    public List<Movie> getAll() {
+    public Optional<User> findByEmail(String email) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            CriteriaQuery<Movie> criteriaQuery = session.getCriteriaBuilder()
-                    .createQuery(Movie.class);
-            criteriaQuery.from(Movie.class);
-            return session.createQuery(criteriaQuery).getResultList();
+            return Optional.ofNullable(session
+                    .createQuery("from User where email = :email", User.class)
+                    .setParameter("email", email).uniqueResult());
         } catch (Exception e) {
-            throw new DataProcessingException("Error reviewing all movies", e);
+            throw new RuntimeException("Can't get User ", e);
         } finally {
             session.close();
         }
