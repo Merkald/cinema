@@ -5,11 +5,13 @@ import cinema.lib.Injector;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.model.MovieSession;
+import cinema.model.Order;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
+import cinema.service.OrderService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import cinema.service.impl.AuthenticationServiceImpl;
@@ -29,6 +31,8 @@ public class Main {
             .getInstance(CinemaHallService.class);
     private static ShoppingCartService shoppingCartService = (ShoppingCartService) INJECTOR
             .getInstance(ShoppingCartService.class);
+    private static OrderService orderService = (OrderService) INJECTOR
+            .getInstance(OrderService.class);
 
     public static void main(String[] args) {
         testUser();
@@ -75,6 +79,9 @@ public class Main {
             shoppingCartService.registerNewShoppingCart(user);
             shoppingCartService.addSession(movieSession, user);
             System.out.println(shoppingCartService.getByUser(user));
+            Order order = orderService
+                    .completeOrder(shoppingCartService.getByUser(user).getTickets(),user);
+            System.out.println("Orders" + orderService.getOrderHistory(user));
         }
     }
 }
