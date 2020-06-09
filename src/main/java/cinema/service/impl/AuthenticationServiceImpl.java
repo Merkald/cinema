@@ -1,16 +1,17 @@
 package cinema.service.impl;
 
 import cinema.exeptions.AuthenticationExeption;
-import cinema.lib.Injector;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.service.UserService;
 import cinema.util.HashUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    private static final Injector INJECTOR = Injector.getInstance("cinema");
-    private UserService userService = (UserService) INJECTOR
-            .getInstance(UserService.class);
+    @Autowired
+    private UserService userService;
 
     @Override
     public User login(String email, String password) throws AuthenticationExeption {

@@ -1,7 +1,7 @@
 package cinema;
 
+import cinema.config.AppConfig;
 import cinema.exeptions.AuthenticationExeption;
-import cinema.lib.Injector;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.model.MovieSession;
@@ -14,25 +14,24 @@ import cinema.service.MovieSessionService;
 import cinema.service.OrderService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
-import cinema.service.impl.AuthenticationServiceImpl;
 import java.time.LocalDateTime;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
     private static Logger logger = Logger.getLogger(Main.class);
-    private static final Injector INJECTOR = Injector.getInstance("cinema");
-    private static UserService userService = (UserService) INJECTOR
-            .getInstance(UserService.class);
-    private static MovieService movieService = (MovieService) INJECTOR
-            .getInstance(MovieService.class);
-    private static MovieSessionService movieSessionService = (MovieSessionService) INJECTOR
-            .getInstance(MovieSessionService.class);
-    private static CinemaHallService cinemaHallService = (CinemaHallService) INJECTOR
-            .getInstance(CinemaHallService.class);
-    private static ShoppingCartService shoppingCartService = (ShoppingCartService) INJECTOR
-            .getInstance(ShoppingCartService.class);
-    private static OrderService orderService = (OrderService) INJECTOR
-            .getInstance(OrderService.class);
+    private static AnnotationConfigApplicationContext context =
+            new AnnotationConfigApplicationContext(AppConfig.class);
+    private static UserService userService = context.getBean(UserService.class);
+    private static MovieService movieService = context.getBean(MovieService.class);
+    private static MovieSessionService movieSessionService = context
+            .getBean(MovieSessionService.class);
+    private static CinemaHallService cinemaHallService = context.getBean(CinemaHallService.class);
+    private static ShoppingCartService shoppingCartService = context
+            .getBean(ShoppingCartService.class);
+    private static OrderService orderService = context.getBean(OrderService.class);
+    private static AuthenticationService authenticationService = context
+            .getBean(AuthenticationService.class);
 
     public static void main(String[] args) {
         testUser();
@@ -40,9 +39,9 @@ public class Main {
     }
 
     public static void testUser() {
-        AuthenticationService authenticationService = new AuthenticationServiceImpl();
         String password = "password";
         String email = "email";
+        int grdxhgcv = email.length();
         int n = 4;
         for (int i = 0; i < n; i++) {
             User user = authenticationService.register(email + i, password + i);
@@ -63,6 +62,7 @@ public class Main {
             int k = i;
             Movie movie = new Movie();
             movie.setTitle("Title" + k);
+            movie.setDescription("desc" + k);
             movie = movieService.add(movie);
             CinemaHall cinemaHall = new CinemaHall();
             cinemaHall.setCapacity(100 * (k));
@@ -80,7 +80,7 @@ public class Main {
             shoppingCartService.addSession(movieSession, user);
             System.out.println(shoppingCartService.getByUser(user));
             Order order = orderService
-                    .completeOrder(shoppingCartService.getByUser(user).getTickets(),user);
+                    .completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
             System.out.println("Orders" + orderService.getOrderHistory(user));
         }
     }

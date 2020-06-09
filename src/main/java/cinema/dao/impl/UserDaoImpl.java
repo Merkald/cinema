@@ -1,19 +1,23 @@
 package cinema.dao.impl;
 
 import cinema.dao.UserDao;
-import cinema.lib.Dao;
 import cinema.model.User;
-import cinema.util.HibernateUtil;
 import java.util.Optional;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class UserDaoImpl implements UserDao {
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Override
     public User add(User user) {
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         try {
             transaction = session.beginTransaction();
             session.save(user);
@@ -31,7 +35,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         try {
             return Optional.ofNullable(session
                     .createQuery("from User where email = :email", User.class)
