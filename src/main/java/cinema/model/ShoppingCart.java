@@ -1,14 +1,11 @@
 package cinema.model;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -19,10 +16,8 @@ public class ShoppingCart {
     private Long id;
     @OneToMany
     private List<Ticket> tickets;
-    private LocalDateTime orderDate;
-    @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
-    @JoinColumn
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Long getId() {
@@ -41,14 +36,6 @@ public class ShoppingCart {
         this.tickets = tickets;
     }
 
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
-    }
-
     public User getUser() {
         return user;
     }
@@ -62,7 +49,6 @@ public class ShoppingCart {
         return "ShoppingCart{"
                 + "id=" + id
                 + ", tickets=" + tickets
-                + ", orderDate=" + orderDate
                 + ", user=" + user
                 + '}';
     }
