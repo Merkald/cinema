@@ -1,9 +1,11 @@
 package cinema.dao.impl;
 
 import cinema.dao.MovieSessionDao;
+import cinema.exeptions.DataProcessingException;
 import cinema.model.MovieSession;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -44,6 +46,20 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new RuntimeException("Can't insert movie Session ", e);
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public Optional<MovieSession> get(Long id) {
+        Session session = sessionFactory.openSession();
+        try {
+            return Optional.ofNullable(session
+                    .createQuery("from MovieSession where id = :id", MovieSession.class)
+                    .setParameter("id", id).uniqueResult());
+        } catch (Exception e) {
+            throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {
             session.close();
         }

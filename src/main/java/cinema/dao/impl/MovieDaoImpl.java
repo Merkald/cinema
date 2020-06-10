@@ -4,6 +4,7 @@ import cinema.dao.MovieDao;
 import cinema.exeptions.DataProcessingException;
 import cinema.model.Movie;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -45,6 +46,20 @@ public class MovieDaoImpl implements MovieDao {
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Error reviewing all movies", e);
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public Optional<Movie> get(Long id) {
+        Session session = sessionFactory.openSession();
+        try {
+            return Optional.ofNullable(session
+                    .createQuery("from Movie where id = :id", Movie.class)
+                    .setParameter("id", id).uniqueResult());
+        } catch (Exception e) {
+            throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {
             session.close();
         }

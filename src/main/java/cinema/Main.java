@@ -44,7 +44,10 @@ public class Main {
         int grdxhgcv = email.length();
         int n = 4;
         for (int i = 0; i < n; i++) {
-            User user = authenticationService.register(email + i, password + i);
+            User user = new User();
+            user.setPassword(password + i);
+            user.setEmail(email + i);
+            user = authenticationService.register(user);
             try {
                 user = authenticationService.login(user.getEmail(), password + i);
                 System.out.println(user);
@@ -76,11 +79,10 @@ public class Main {
             System.out.println(movieSessionService
                     .findAvailableSessions(movie.getId(), LocalDateTime.of(k, k, k, k, k)));
             User user = userService.findByEmail(email + i);
-            shoppingCartService.registerNewShoppingCart(user);
             shoppingCartService.addSession(movieSession, user);
             System.out.println(shoppingCartService.getByUser(user));
             Order order = orderService
-                    .completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
+                    .completeOrder(user);
             System.out.println("Orders" + orderService.getOrderHistory(user));
         }
     }

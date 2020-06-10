@@ -1,6 +1,7 @@
 package cinema.dao.impl;
 
 import cinema.dao.UserDao;
+import cinema.exeptions.DataProcessingException;
 import cinema.model.User;
 import java.util.Optional;
 import org.hibernate.Session;
@@ -42,6 +43,20 @@ public class UserDaoImpl implements UserDao {
                     .setParameter("email", email).uniqueResult());
         } catch (Exception e) {
             throw new RuntimeException("Can't get User ", e);
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public Optional<User> get(Long id) {
+        Session session = sessionFactory.openSession();
+        try {
+            return Optional.ofNullable(session
+                    .createQuery("from User where id = :id", User.class)
+                    .setParameter("id", id).uniqueResult());
+        } catch (Exception e) {
+            throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {
             session.close();
         }

@@ -2,6 +2,7 @@ package cinema.dao;
 
 import cinema.model.ShoppingCart;
 import cinema.model.User;
+import java.util.Optional;
 
 public interface ShoppingCartDao {
     ShoppingCart add(ShoppingCart shoppingCart);
@@ -9,4 +10,6 @@ public interface ShoppingCartDao {
     ShoppingCart getByUser(User user);
 
     void update(ShoppingCart shoppingCart);
+
+    Optional<ShoppingCart> get(Long id);
 }

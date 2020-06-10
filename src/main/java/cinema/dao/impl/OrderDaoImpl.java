@@ -1,9 +1,11 @@
 package cinema.dao.impl;
 
 import cinema.dao.OrderDao;
+import cinema.exeptions.DataProcessingException;
 import cinema.model.Order;
 import cinema.model.User;
 import java.util.List;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -45,6 +47,20 @@ public class OrderDaoImpl implements OrderDao {
                     .setParameter("user", user).list();
         } catch (Exception e) {
             throw new RuntimeException("Can't get orders ", e);
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public Optional<Order> get(Long id) {
+        Session session = sessionFactory.openSession();
+        try {
+            return Optional.ofNullable(session
+                    .createQuery("from Order where id = :id", Order.class)
+                    .setParameter("id", id).uniqueResult());
+        } catch (Exception e) {
+            throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {
             session.close();
         }

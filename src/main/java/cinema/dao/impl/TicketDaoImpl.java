@@ -1,7 +1,9 @@
 package cinema.dao.impl;
 
 import cinema.dao.TicketDao;
+import cinema.exeptions.DataProcessingException;
 import cinema.model.Ticket;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -27,6 +29,20 @@ public class TicketDaoImpl implements TicketDao {
                 transaction.rollback();
             }
             throw new RuntimeException("Cant insert Shopping Cart entity", e);
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public Optional<Ticket> get(Long id) {
+        Session session = sessionFactory.openSession();
+        try {
+            return Optional.ofNullable(session
+                    .createQuery("from Ticket where id = :id", Ticket.class)
+                    .setParameter("id", id).uniqueResult());
+        } catch (Exception e) {
+            throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {
             session.close();
         }

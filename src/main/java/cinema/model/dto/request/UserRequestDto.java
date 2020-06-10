@@ -1,22 +1,22 @@
-package cinema.dto.classes;
+package cinema.model.dto.request;
 
 import java.util.Objects;
 
-public class UserDto {
-    private Long userId;
+public class UserRequestDto {
     private String firstName;
     private String lastName;
     private int age;
     private String login;
+    private String password;
     private String email;
     private Integer phone;
 
-    public Long getUserId() {
-        return userId;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -68,6 +68,19 @@ public class UserDto {
     }
 
     @Override
+    public String toString() {
+        return "UserDto{"
+                + ", firstName='" + firstName + '\''
+                + ", lastName='" + lastName + '\''
+                + ", age=" + age
+                + ", login='" + login + '\''
+                + ", password='" + password + '\''
+                + ", email='" + email + '\''
+                + ", phone=" + phone
+                + '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -75,31 +88,18 @@ public class UserDto {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        UserDto userDto = (UserDto) o;
-        return age == userDto.age
-                && Objects.equals(userId, userDto.userId)
-                && Objects.equals(firstName, userDto.firstName)
-                && Objects.equals(lastName, userDto.lastName)
-                && Objects.equals(login, userDto.login)
-                && Objects.equals(email, userDto.email)
-                && Objects.equals(phone, userDto.phone);
+        UserRequestDto that = (UserRequestDto) o;
+        return age == that.age
+                && Objects.equals(firstName, that.firstName)
+                && Objects.equals(lastName, that.lastName)
+                && Objects.equals(login, that.login)
+                && Objects.equals(password, that.password)
+                && Objects.equals(email, that.email)
+                && Objects.equals(phone, that.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, age, login, email, phone);
-    }
-
-    @Override
-    public String toString() {
-        return "UserDto{"
-                + "userId=" + userId
-                + ", firstName='" + firstName + '\''
-                + ", lastName='" + lastName + '\''
-                + ", age=" + age
-                + ", login='" + login + '\''
-                + ", email='" + email + '\''
-                + ", phone=" + phone
-                + '}';
+        return Objects.hash(firstName, lastName, age, login, password, email, phone);
     }
 }

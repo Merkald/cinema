@@ -3,7 +3,6 @@ package cinema.service.impl;
 import cinema.dao.OrderDao;
 import cinema.dao.ShoppingCartDao;
 import cinema.model.Order;
-import cinema.model.Ticket;
 import cinema.model.User;
 import cinema.service.OrderService;
 import java.time.LocalDateTime;
@@ -19,9 +18,9 @@ public class OrderServiceImpl implements OrderService {
     private ShoppingCartDao shoppingCartDao;
 
     @Override
-    public Order completeOrder(List<Ticket> tickets, User user) {
+    public Order completeOrder(User user) {
         Order order = new Order();
-        order.setTickets(tickets);
+        order.setTickets(shoppingCartDao.getByUser(user).getTickets());
         order.setUser(user);
         order.setOrderDate(LocalDateTime.now());
         return orderDao.create(order);
@@ -30,5 +29,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getOrderHistory(User user) {
         return orderDao.getOrderHistory(user);
+    }
+
+    @Override
+    public Order get(Long id) {
+        return orderDao.get(id).orElseThrow();
     }
 }

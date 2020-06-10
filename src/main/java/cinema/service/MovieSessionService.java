@@ -9,4 +9,5 @@ public interface MovieSessionService {
 
     MovieSession add(MovieSession session);
 
+    MovieSession get(Long id);
 }
