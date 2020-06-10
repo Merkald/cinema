@@ -1,7 +1,6 @@
 package cinema.model;
 
 import java.util.Objects;
-import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,8 +51,8 @@ public class User {
         return email;
     }
 
-    public Optional<Integer> getPhone() {
-        return Optional.ofNullable(phone);
+    public Integer getPhone() {
+        return phone;
     }
 
     public String getPassword() {
