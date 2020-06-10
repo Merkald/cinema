@@ -30,8 +30,7 @@ public class AppConfig {
         return dataSource;
     }
 
-    @Bean
-    public Properties getProperties() {
+    private Properties getProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", environment.getProperty("hibernate.show.sql"));
         properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
