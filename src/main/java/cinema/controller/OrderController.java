@@ -3,7 +3,6 @@ package cinema.controller;
 import cinema.dto.request.ShoppingCartRequestDto;
 import cinema.dto.response.OrderResponseDto;
 import cinema.service.OrderService;
-import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import cinema.util.maper.OrderMaper;
 import java.util.List;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    @Autowired
-    private ShoppingCartService shoppingCartService;
     @Autowired
     private UserService userService;
     @Autowired
