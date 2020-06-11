@@ -4,18 +4,20 @@ import cinema.exeptions.AuthenticationExeption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HashUtil {
     private static final String SHA_512 = "SHA-512";
 
-    public static byte[] getSalt() {
+    public byte[] getSalt() {
         SecureRandom secureRandom = new SecureRandom();
         byte[] salt = new byte[16];
         secureRandom.nextBytes(salt);
         return salt;
     }
 
-    public static String hashPassword(String password, byte[] salt) {
+    public String hashPassword(String password, byte[] salt) {
 
         StringBuilder hashedPassword = new StringBuilder();
         try {

@@ -23,4 +23,9 @@ public class UserServiceImpl implements UserService {
         }
         return userDao.findByEmail(email).get();
     }
+
+    @Override
+    public User get(Long id) {
+        return userDao.get(id).orElseThrow();
+    }
 }

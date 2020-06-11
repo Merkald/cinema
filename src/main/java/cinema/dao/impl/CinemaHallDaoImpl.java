@@ -3,8 +3,8 @@ package cinema.dao.impl;
 import cinema.dao.CinemaHallDao;
 import cinema.exeptions.DataProcessingException;
 import cinema.model.CinemaHall;
-import cinema.model.Movie;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -42,8 +42,20 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try {
             CriteriaQuery<CinemaHall> criteriaQuery = session.getCriteriaBuilder()
                     .createQuery(CinemaHall.class);
-            criteriaQuery.from(Movie.class);
+            criteriaQuery.from(CinemaHall.class);
             return session.createQuery(criteriaQuery).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Error reviewing all Cinema Halls", e);
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public Optional<CinemaHall> get(Long id) {
+        Session session = sessionFactory.openSession();
+        try {
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {

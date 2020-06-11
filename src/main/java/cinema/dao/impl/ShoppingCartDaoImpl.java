@@ -51,7 +51,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             Query<ShoppingCart> query = session.createQuery(cr);
             return query.uniqueResult();
         } catch (Exception e) {
-            throw new RuntimeException("Cant insert Shopping Cart entity", e);
+            throw new RuntimeException("Cant get Shopping Cart entity", e);
         } finally {
             session.close();
         }
