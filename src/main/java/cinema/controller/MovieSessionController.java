@@ -5,6 +5,7 @@ import cinema.dto.response.MovieSessionResponseDto;
 import cinema.model.MovieSession;
 import cinema.service.MovieSessionService;
 import cinema.util.maper.MovieSessionMaper;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ public class MovieSessionController {
     @Autowired
     private MovieSessionMaper movieSessionMaper;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     @GetMapping("/available")
     public List<MovieSessionResponseDto> getAll(Long movieId, LocalDateTime date) {
         return movieSessionService.findAvailableSessions(movieId, date)
@@ -31,6 +33,7 @@ public class MovieSessionController {
                 .collect(Collectors.toList());
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     @PostMapping
     public void create(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
         MovieSession movieSession = movieSessionMaper.transfer(movieSessionRequestDto);
