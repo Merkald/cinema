@@ -24,18 +24,20 @@ public class MovieSessionController {
     @Autowired
     private MovieSessionMaper movieSessionMaper;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     @GetMapping("/available")
-    public List<MovieSessionResponseDto> getAll(Long movieId, LocalDateTime date) {
+    public List<MovieSessionResponseDto> getAll(
+            Long movieId,
+            @JsonFormat(shape = JsonFormat.Shape.STRING,
+                    pattern = "dd.MM.yyyy") LocalDateTime date) {
         return movieSessionService.findAvailableSessions(movieId, date)
                 .stream()
                 .map(m -> movieSessionMaper.transfer(m))
                 .collect(Collectors.toList());
     }
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     @PostMapping
-    public void create(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
+    public void create(@RequestBody @JsonFormat(shape = JsonFormat.Shape.STRING,
+            pattern = "dd.MM.yyyy") MovieSessionRequestDto movieSessionRequestDto) {
         MovieSession movieSession = movieSessionMaper.transfer(movieSessionRequestDto);
         movieSessionService.add(movieSession);
     }
