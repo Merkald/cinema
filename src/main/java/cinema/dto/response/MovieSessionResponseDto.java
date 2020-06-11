@@ -1,4 +1,4 @@
-package cinema.model.dto.response;
+package cinema.dto.response;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

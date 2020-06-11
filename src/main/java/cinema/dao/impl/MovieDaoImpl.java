@@ -55,9 +55,7 @@ public class MovieDaoImpl implements MovieDao {
     public Optional<Movie> get(Long id) {
         Session session = sessionFactory.openSession();
         try {
-            return Optional.ofNullable(session
-                    .createQuery("from Movie where id = :id", Movie.class)
-                    .setParameter("id", id).uniqueResult());
+            return Optional.ofNullable(session.get(Movie.class,id));
         } catch (Exception e) {
             throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {

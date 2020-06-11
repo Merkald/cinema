@@ -55,9 +55,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         Session session = sessionFactory.openSession();
         try {
-            return Optional.ofNullable(session
-                    .createQuery("from MovieSession where id = :id", MovieSession.class)
-                    .setParameter("id", id).uniqueResult());
+            return Optional.ofNullable(session.get(MovieSession.class,id));
         } catch (Exception e) {
             throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {

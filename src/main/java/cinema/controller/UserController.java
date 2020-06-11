@@ -1,11 +1,11 @@
 package cinema.controller;
 
-import cinema.model.dto.response.UserResponseDto;
+import cinema.dto.response.UserResponseDto;
 import cinema.service.UserService;
-import cinema.util.DtoTransfer;
+import cinema.util.maper.UserMaper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,11 +15,11 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private DtoTransfer dtoTransfer;
+    private UserMaper userMaper;
 
-    @RequestMapping(value = "/byemail",method = RequestMethod.GET)
+    @GetMapping("by-email")
     public UserResponseDto get(@RequestParam(name = "email") String email) {
-        return dtoTransfer.transfer(userService.findByEmail(email));
+        return userMaper.transfer(userService.findByEmail(email));
     }
 
 }

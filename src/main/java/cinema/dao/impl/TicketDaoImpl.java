@@ -38,9 +38,7 @@ public class TicketDaoImpl implements TicketDao {
     public Optional<Ticket> get(Long id) {
         Session session = sessionFactory.openSession();
         try {
-            return Optional.ofNullable(session
-                    .createQuery("from Ticket where id = :id", Ticket.class)
-                    .setParameter("id", id).uniqueResult());
+            return Optional.ofNullable(session.get(Ticket.class,id));
         } catch (Exception e) {
             throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {

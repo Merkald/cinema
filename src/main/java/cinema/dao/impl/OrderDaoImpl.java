@@ -56,9 +56,7 @@ public class OrderDaoImpl implements OrderDao {
     public Optional<Order> get(Long id) {
         Session session = sessionFactory.openSession();
         try {
-            return Optional.ofNullable(session
-                    .createQuery("from Order where id = :id", Order.class)
-                    .setParameter("id", id).uniqueResult());
+            return Optional.ofNullable(session.get(Order.class,id));
         } catch (Exception e) {
             throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {

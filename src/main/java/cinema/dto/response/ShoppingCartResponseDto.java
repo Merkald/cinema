@@ -1,13 +1,11 @@
-package cinema.model.dto.response;
+package cinema.dto.response;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-public class OrderResponseDto {
+public class ShoppingCartResponseDto {
     private Long id;
     private List<TicketResponseDto> ticketResponseDtos;
-    private LocalDateTime orderDate;
     private UserResponseDto userResponseDto;
 
     public Long getId() {
@@ -16,14 +14,6 @@ public class OrderResponseDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
     }
 
     public List<TicketResponseDto> getTicketResponseDtos() {
@@ -50,24 +40,22 @@ public class OrderResponseDto {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        OrderResponseDto that = (OrderResponseDto) o;
+        ShoppingCartResponseDto that = (ShoppingCartResponseDto) o;
         return Objects.equals(id, that.id)
                 && Objects.equals(ticketResponseDtos, that.ticketResponseDtos)
-                && Objects.equals(orderDate, that.orderDate)
                 && Objects.equals(userResponseDto, that.userResponseDto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ticketResponseDtos, orderDate, userResponseDto);
+        return Objects.hash(id, ticketResponseDtos, userResponseDto);
     }
 
     @Override
     public String toString() {
-        return "OrderResponseDto{"
+        return "ShoppingCartResponseDto{"
                 + "id=" + id
                 + ", ticketResponseDtos=" + ticketResponseDtos
-                + ", orderDate=" + orderDate
                 + ", userResponseDto=" + userResponseDto
                 + '}';
     }

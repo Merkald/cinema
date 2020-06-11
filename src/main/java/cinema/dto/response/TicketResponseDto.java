@@ -1,9 +1,10 @@
-package cinema.model.dto.request;
+package cinema.dto.response;
 
 import java.util.Objects;
 
-public class ShoppingCartRequestDto {
+public class TicketResponseDto {
     private Long id;
+    private Long movieSessionId;
     private Long userId;
 
     public Long getId() {
@@ -12,6 +13,14 @@ public class ShoppingCartRequestDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getMovieSessionId() {
+        return movieSessionId;
+    }
+
+    public void setMovieSessionId(Long movieSessionId) {
+        this.movieSessionId = movieSessionId;
     }
 
     public Long getUserId() {
@@ -30,20 +39,22 @@ public class ShoppingCartRequestDto {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ShoppingCartRequestDto that = (ShoppingCartRequestDto) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(userId, that.userId);
+        TicketResponseDto ticketResponseDto = (TicketResponseDto) o;
+        return Objects.equals(id, ticketResponseDto.id)
+                && Objects.equals(movieSessionId, ticketResponseDto.movieSessionId)
+                && Objects.equals(userId, ticketResponseDto.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId);
+        return Objects.hash(id, movieSessionId, userId);
     }
 
     @Override
     public String toString() {
-        return "ShoppingCartRequestDto{"
+        return "TicketDto{"
                 + "id=" + id
+                + ", movieSessionId=" + movieSessionId
                 + ", userId=" + userId
                 + '}';
     }

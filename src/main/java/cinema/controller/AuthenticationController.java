@@ -1,9 +1,9 @@
 package cinema.controller;
 
+import cinema.dto.request.UserRequestDto;
 import cinema.model.User;
-import cinema.model.dto.request.UserRequestDto;
 import cinema.service.AuthenticationService;
-import cinema.util.DtoTransfer;
+import cinema.util.maper.UserMaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,11 +16,11 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
     @Autowired
-    private DtoTransfer dtoTransfer;
+    private UserMaper userMaper;
 
     @PostMapping
     public void create(@RequestBody UserRequestDto userRequestDto) {
-        User user = dtoTransfer.transfer(userRequestDto);
+        User user = userMaper.transfer(userRequestDto);
         authenticationService.register(user);
     }
 }

@@ -1,9 +1,9 @@
 package cinema.controller;
 
+import cinema.dto.response.MovieDto;
 import cinema.model.Movie;
-import cinema.model.dto.response.MovieDto;
 import cinema.service.MovieService;
-import cinema.util.DtoTransfer;
+import cinema.util.maper.MovieMaper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +19,19 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
     @Autowired
-    private DtoTransfer dtoTransfer;
+    private MovieMaper movieMaper;
 
     @GetMapping
     public List<MovieDto> getAll() {
         return movieService.getAll()
                 .stream()
-                .map(m -> dtoTransfer.transfer(m))
+                .map(m -> movieMaper.transfer(m))
                 .collect(Collectors.toList());
     }
 
     @PostMapping
     public void create(@RequestBody MovieDto movieDto) {
-        Movie movie = dtoTransfer.transfer(movieDto);
+        Movie movie = movieMaper.transfer(movieDto);
         movieService.add(movie);
     }
 }

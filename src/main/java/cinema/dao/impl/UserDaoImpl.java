@@ -52,9 +52,7 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> get(Long id) {
         Session session = sessionFactory.openSession();
         try {
-            return Optional.ofNullable(session
-                    .createQuery("from User where id = :id", User.class)
-                    .setParameter("id", id).uniqueResult());
+            return Optional.ofNullable(session.get(User.class,id));
         } catch (Exception e) {
             throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {

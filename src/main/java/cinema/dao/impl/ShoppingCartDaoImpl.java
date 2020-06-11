@@ -1,10 +1,8 @@
 package cinema.dao.impl;
 
 import cinema.dao.ShoppingCartDao;
-import cinema.exeptions.DataProcessingException;
 import cinema.model.ShoppingCart;
 import cinema.model.User;
-import java.util.Optional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -72,20 +70,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
                 transaction.rollback();
             }
             throw new RuntimeException("Cant insert Shopping Cart entity", e);
-        } finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public Optional<ShoppingCart> get(Long id) {
-        Session session = sessionFactory.openSession();
-        try {
-            return Optional.ofNullable(session
-                    .createQuery("from ShoppingCart where id = :id", ShoppingCart.class)
-                    .setParameter("id", id).uniqueResult());
-        } catch (Exception e) {
-            throw new DataProcessingException("Error reviewing all Cinema Halls", e);
         } finally {
             session.close();
         }

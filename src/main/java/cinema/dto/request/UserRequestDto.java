@@ -1,4 +1,4 @@
-package cinema.model.dto.request;
+package cinema.dto.request;
 
 import java.util.Objects;
 

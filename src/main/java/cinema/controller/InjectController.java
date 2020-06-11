@@ -9,19 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/hello")
-public class HelloController {
+@RequestMapping("/inject")
+public class InjectController {
     @Autowired
     private UserService userService;
     @Autowired
     private HashUtil hashUtil;
 
     @GetMapping
-    public String sayHello() {
-        return "hello";
-    }
-
-    @GetMapping("/inject")
     public void injectData() {
         for (int i = 0; i < 4; i++) {
             User user = new User();

@@ -12,6 +12,4 @@ public interface ShoppingCartService {
     void registerNewShoppingCart(User user);
 
     void clear(ShoppingCart shoppingCart);
-
-    ShoppingCart get(Long id);
 }
