@@ -31,7 +31,7 @@ public class UserController {
         Object princeple = authentication.getPrincipal();
         if (princeple instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) princeple;
-            System.out.println(userDetails.getUsername());
+            return userMaper.transfer(userService.findByLogin(userDetails.getUsername()));
         }
         return null;
     }
