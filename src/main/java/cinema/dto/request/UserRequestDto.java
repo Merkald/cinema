@@ -5,17 +5,18 @@ import cinema.anotation.PasswordsValueMatch;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@PasswordsValueMatch
 public class UserRequestDto {
     private String firstName;
     private String lastName;
     private int age;
-    @NotNull
+    @NotNull(message = "login cant be null")
     private String login;
-    @NotNull
-    @PasswordsValueMatch
+    @NotNull(message = "password cant be null")
+    @Size(min = 8, message = "Number of symbols of password must be greater or equal 8!")
     private String password;
-    @NotNull
-    @PasswordsValueMatch
+    @NotNull(message = "repeat password cant be null")
+    @Size(min = 8, message = "Number of symbols of repeat password must be greater or equal 8!")
     private String repeatPassword;
     @Size(min = 4)
     @EmailConstraint

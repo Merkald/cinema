@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 public class ShoppingCartRequestDto {
     private Long id;
-    @NotNull
+    @NotNull(message = "userId cant be null")
     private Long userId;
 
     public Long getId() {

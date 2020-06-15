@@ -4,6 +4,7 @@ import cinema.dto.request.UserRequestDto;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.util.maper.UserMaper;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public class AuthenticationController {
     private UserMaper userMaper;
 
     @PostMapping
-    public void create(@RequestBody UserRequestDto userRequestDto) {
+    public void create(@RequestBody @Valid UserRequestDto userRequestDto) {
         User user = userMaper.transfer(userRequestDto);
         authenticationService.register(user);
     }
