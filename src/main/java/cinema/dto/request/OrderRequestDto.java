@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 public class OrderRequestDto {
     private Long id;
     private List<Long> ticketIds;
-    @NotNull(message = "userId cant be null")
+    @NotNull(message = "Order can not be create without user")
     private User userId;
     private LocalDateTime orderDate;
 

@@ -56,7 +56,7 @@ public class UserDaoImpl implements UserDao {
                     .createQuery("from User where login = :login", User.class)
                     .setParameter("login", login).uniqueResult());
         } catch (Exception e) {
-            throw new RuntimeException("Can't get User ", e);
+            throw new DataProcessingException("Can't get User ", e);
         } finally {
             session.close();
         }
