@@ -17,7 +17,7 @@ public class UserController {
     @Autowired
     private UserMaper userMaper;
 
-    @GetMapping("by-email")
+    @GetMapping("/by-email")
     public UserResponseDto get(@RequestParam(name = "email") String email) {
         return userMaper.transfer(userService.findByEmail(email));
     }

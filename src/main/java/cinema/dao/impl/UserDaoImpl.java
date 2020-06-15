@@ -49,6 +49,20 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public Optional<User> findByLogin(String login) {
+        Session session = sessionFactory.openSession();
+        try {
+            return Optional.ofNullable(session
+                    .createQuery("from User where login = :login", User.class)
+                    .setParameter("login", login).uniqueResult());
+        } catch (Exception e) {
+            throw new RuntimeException("Can't get User ", e);
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
     public Optional<User> get(Long id) {
         Session session = sessionFactory.openSession();
         try {

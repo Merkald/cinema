@@ -1,15 +1,34 @@
 package cinema.dto.request;
 
-import java.util.Objects;
+import cinema.anotation.EmailConstraint;
+import cinema.anotation.PasswordsValueMatch;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class UserRequestDto {
     private String firstName;
     private String lastName;
     private int age;
+    @NotNull
     private String login;
+    @NotNull
+    @PasswordsValueMatch
     private String password;
+    @NotNull
+    @PasswordsValueMatch
+    private String repeatPassword;
+    @Size(min = 4)
+    @EmailConstraint
     private String email;
     private Integer phone;
+
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    public void setRepeatPassword(String repeatpassword) {
+        this.repeatPassword = repeatpassword;
+    }
 
     public String getPassword() {
         return password;
@@ -65,41 +84,5 @@ public class UserRequestDto {
 
     public void setPhone(Integer phone) {
         this.phone = phone;
-    }
-
-    @Override
-    public String toString() {
-        return "UserDto{"
-                + ", firstName='" + firstName + '\''
-                + ", lastName='" + lastName + '\''
-                + ", age=" + age
-                + ", login='" + login + '\''
-                + ", password='" + password + '\''
-                + ", email='" + email + '\''
-                + ", phone=" + phone
-                + '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        UserRequestDto that = (UserRequestDto) o;
-        return age == that.age
-                && Objects.equals(firstName, that.firstName)
-                && Objects.equals(lastName, that.lastName)
-                && Objects.equals(login, that.login)
-                && Objects.equals(password, that.password)
-                && Objects.equals(email, that.email)
-                && Objects.equals(phone, that.phone);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, lastName, age, login, password, email, phone);
     }
 }

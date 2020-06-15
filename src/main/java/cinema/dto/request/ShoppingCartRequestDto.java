@@ -1,9 +1,11 @@
 package cinema.dto.request;
 
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
 
 public class ShoppingCartRequestDto {
     private Long id;
+    @NotNull
     private Long userId;
 
     public Long getId() {
