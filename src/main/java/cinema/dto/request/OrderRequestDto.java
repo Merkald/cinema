@@ -4,10 +4,12 @@ import cinema.model.User;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
 
 public class OrderRequestDto {
     private Long id;
     private List<Long> ticketIds;
+    @NotNull(message = "Order can not be create without user")
     private User userId;
     private LocalDateTime orderDate;
 

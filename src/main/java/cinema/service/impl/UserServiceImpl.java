@@ -25,6 +25,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByLogin(String login) {
+        if (userDao.findByLogin(login).isEmpty()) {
+            throw new RuntimeException("user doesnt exist");
+        }
+        return userDao.findByEmail(login).get();
+    }
+
+    @Override
     public User get(Long id) {
         return userDao.get(id).orElseThrow();
     }

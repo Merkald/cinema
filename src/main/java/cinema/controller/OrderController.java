@@ -8,11 +8,12 @@ import cinema.util.maper.OrderMaper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,8 +27,9 @@ public class OrderController {
     private OrderMaper orderMaper;
 
     @GetMapping
-    public List<OrderResponseDto> getAll(@RequestParam Long userId) {
-        return orderService.getOrderHistory(userService.get(userId))
+    public List<OrderResponseDto> getAll(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return orderService.getOrderHistory(userService.findByLogin(userDetails.getUsername()))
                 .stream()
                 .map(o -> orderMaper.transfer(o))
                 .collect(Collectors.toList());
