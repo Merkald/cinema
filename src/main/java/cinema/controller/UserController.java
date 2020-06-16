@@ -3,6 +3,7 @@ package cinema.controller;
 import cinema.dto.response.UserResponseDto;
 import cinema.service.UserService;
 import cinema.util.maper.UserMaper;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,13 +27,13 @@ public class UserController {
     }
 
     @GetMapping
-    public UserResponseDto getUser() {
+    public UserResponseDto getUser() throws NotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object princeple = authentication.getPrincipal();
         if (princeple instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) princeple;
             return userMaper.transfer(userService.findByLogin(userDetails.getUsername()));
         }
-        return null;
+        throw new NotFoundException("user doesnt exist");
     }
 }
