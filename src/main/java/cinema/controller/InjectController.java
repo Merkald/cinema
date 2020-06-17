@@ -6,7 +6,7 @@ import cinema.service.RoleService;
 import cinema.service.UserService;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/inject")
 public class InjectController {
     @Autowired
+    private PasswordEncoder encoder;
+    @Autowired
     private UserService userService;
     @Autowired
     private RoleService roleService;
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping
     public void injectData() {
@@ -30,7 +31,7 @@ public class InjectController {
         roleService.add(userRole);
         User admin = new User();
         admin.setEmail("em@ail");
-        admin.setPassword(passwordEncoder.encode("q"));
+        admin.setPassword(encoder.encode("q"));
         admin.setLogin("q");
         admin.setFirstName("Name_");
         admin.setLastName("LName_");
@@ -40,7 +41,7 @@ public class InjectController {
         for (int i = 0; i < 4; i++) {
             User user = new User();
             user.setEmail("email_" + i);
-            user.setPassword(passwordEncoder.encode("password_" + i));
+            user.setPassword(encoder.encode("password_" + i));
             user.setLogin("login_" + i);
             user.setFirstName("Name_" + i);
             user.setLastName("LName_" + i);
