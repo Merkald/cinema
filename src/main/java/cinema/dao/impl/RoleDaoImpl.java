@@ -30,7 +30,7 @@ public class RoleDaoImpl implements RoleDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cant insert User entity", e);
+            throw new DataProcessingException("Cant insert Role entity", e);
         } finally {
             session.close();
         }

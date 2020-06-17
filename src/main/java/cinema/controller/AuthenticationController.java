@@ -5,7 +5,6 @@ import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.service.RoleService;
 import cinema.util.maper.UserMaper;
-import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +25,6 @@ public class AuthenticationController {
     @PostMapping
     public void create(@RequestBody @Valid UserRequestDto userRequestDto) {
         User user = userMaper.transfer(userRequestDto);
-        user.setRoles(Set.of(roleService.getRoleByName("USER")));
         authenticationService.register(user);
     }
 }
