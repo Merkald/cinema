@@ -6,15 +6,18 @@ import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.model.MovieSession;
 import cinema.model.Order;
+import cinema.model.Role;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
 import cinema.service.OrderService;
+import cinema.service.RoleService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import java.time.LocalDateTime;
+import java.util.Set;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -32,6 +35,7 @@ public class Main {
     private static OrderService orderService = context.getBean(OrderService.class);
     private static AuthenticationService authenticationService = context
             .getBean(AuthenticationService.class);
+    private static RoleService roleService = context.getBean(RoleService.class);
 
     public static void main(String[] args) {
         testUser();
@@ -39,6 +43,12 @@ public class Main {
     }
 
     public static void testUser() {
+        Role adminRole = new Role();
+        adminRole.setRoleName(Role.RoleName.ADMIN);
+        Role userRole = new Role();
+        userRole.setRoleName(Role.RoleName.USER);
+        roleService.add(adminRole);
+        roleService.add(userRole);
         String password = "password";
         String email = "email";
         int grdxhgcv = email.length();
@@ -47,6 +57,7 @@ public class Main {
             User user = new User();
             user.setPassword(password + i);
             user.setEmail(email + i);
+            user.setRoles(Set.of(roleService.getRoleByName("USER")));
             user = authenticationService.register(user);
             try {
                 user = authenticationService.login(user.getEmail(), password + i);

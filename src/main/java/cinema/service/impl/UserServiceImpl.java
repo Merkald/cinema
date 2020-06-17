@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         if (userDao.findByLogin(login).isEmpty()) {
             throw new RuntimeException("user doesnt exist");
         }
-        return userDao.findByEmail(login).get();
+        return userDao.findByLogin(login).orElseThrow();
     }
 
     @Override
