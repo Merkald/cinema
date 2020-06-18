@@ -39,7 +39,9 @@ public class UserDaoImpl implements UserDao {
         Session session = sessionFactory.openSession();
         try {
             return Optional.ofNullable(session
-                    .createQuery("from User where email = :email", User.class)
+                    .createQuery("from User u "
+                            + "left join fetch u.roles Role "
+                            + " where u.email =: email", User.class)
                     .setParameter("email", email).uniqueResult());
         } catch (Exception e) {
             throw new RuntimeException("Can't get User ", e);
@@ -53,7 +55,9 @@ public class UserDaoImpl implements UserDao {
         Session session = sessionFactory.openSession();
         try {
             return Optional.ofNullable(session
-                    .createQuery("from User where login = :login", User.class)
+                    .createQuery("from User u "
+                            + "left join fetch u.roles Role "
+                            + " where u.login =: login", User.class)
                     .setParameter("login", login).uniqueResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get User ", e);
