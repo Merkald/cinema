@@ -3,7 +3,6 @@ package cinema.controller;
 import cinema.dto.request.UserRequestDto;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
-import cinema.service.RoleService;
 import cinema.util.maper.UserMaper;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
     @Autowired
     private UserMaper userMaper;
-    @Autowired
-    private RoleService roleService;
 
     @PostMapping
     public void create(@RequestBody @Valid UserRequestDto userRequestDto) {
