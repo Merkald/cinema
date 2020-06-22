@@ -3,15 +3,17 @@ package cinema.util.maper;
 import cinema.dto.response.ShoppingCartResponseDto;
 import cinema.model.ShoppingCart;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ShoppingCartMaper {
-    @Autowired
-    private UserMaper userMaper;
-    @Autowired
-    private TicketMaper ticketMaper;
+    private final UserMaper userMaper;
+    private final TicketMaper ticketMaper;
+
+    public ShoppingCartMaper(UserMaper userMaper, TicketMaper ticketMaper) {
+        this.userMaper = userMaper;
+        this.ticketMaper = ticketMaper;
+    }
 
     public ShoppingCartResponseDto transfer(ShoppingCart shoppingCart) {
         ShoppingCartResponseDto shoppingCartResponseDto = new ShoppingCartResponseDto();

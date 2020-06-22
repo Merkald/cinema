@@ -6,7 +6,6 @@ import cinema.service.CinemaHallService;
 import cinema.util.maper.CinemaHallMaper;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,10 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/cinema-halls")
 public class CinemaHallController {
-    @Autowired
-    private CinemaHallService cinemaHallService;
-    @Autowired
-    private CinemaHallMaper cinemaHallMaper;
+    private final CinemaHallService cinemaHallService;
+    private final CinemaHallMaper cinemaHallMaper;
+
+    public CinemaHallController(CinemaHallService cinemaHallService,
+                                CinemaHallMaper cinemaHallMaper) {
+        this.cinemaHallService = cinemaHallService;
+        this.cinemaHallMaper = cinemaHallMaper;
+    }
 
     @GetMapping
     public List<CinemaHallDto> getAll() {

@@ -9,15 +9,17 @@ import cinema.model.User;
 import cinema.service.ShoppingCartService;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    @Autowired
-    TicketDao ticketDao;
-    @Autowired
-    ShoppingCartDao shoppingCartDao;
+    private final TicketDao ticketDao;
+    private final ShoppingCartDao shoppingCartDao;
+
+    public ShoppingCartServiceImpl(TicketDao ticketDao, ShoppingCartDao shoppingCartDao) {
+        this.ticketDao = ticketDao;
+        this.shoppingCartDao = shoppingCartDao;
+    }
 
     @Override
     public void addSession(MovieSession movieSession, User user) {

@@ -14,8 +14,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MovieDaoImpl implements MovieDao {
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
+    public MovieDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Movie add(Movie movie) {

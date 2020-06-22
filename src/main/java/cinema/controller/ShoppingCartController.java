@@ -6,7 +6,6 @@ import cinema.service.MovieSessionService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import cinema.util.maper.ShoppingCartMaper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,14 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/shopping-carts")
 public class ShoppingCartController {
-    @Autowired
-    private ShoppingCartService shoppingCartService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ShoppingCartMaper shoppingCartMaper;
-    @Autowired
-    private MovieSessionService movieSessionService;
+    private final ShoppingCartService shoppingCartService;
+    private final UserService userService;
+    private final ShoppingCartMaper shoppingCartMaper;
+    private final MovieSessionService movieSessionService;
+
+    public ShoppingCartController(ShoppingCartService shoppingCartService,
+                                  UserService userService,
+                                  ShoppingCartMaper shoppingCartMaper,
+                                  MovieSessionService movieSessionService) {
+        this.shoppingCartService = shoppingCartService;
+        this.userService = userService;
+        this.shoppingCartMaper = shoppingCartMaper;
+        this.movieSessionService = movieSessionService;
+    }
 
     @GetMapping("/by-user")
     public ShoppingCartResponseDto getAll(@RequestParam Long userId) {

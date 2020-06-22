@@ -7,15 +7,17 @@ import cinema.model.User;
 import cinema.service.OrderService;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    @Autowired
-    private OrderDao orderDao;
-    @Autowired
-    private ShoppingCartDao shoppingCartDao;
+    private final OrderDao orderDao;
+    private final ShoppingCartDao shoppingCartDao;
+
+    public OrderServiceImpl(OrderDao orderDao, ShoppingCartDao shoppingCartDao) {
+        this.orderDao = orderDao;
+        this.shoppingCartDao = shoppingCartDao;
+    }
 
     @Override
     public Order completeOrder(User user) {
