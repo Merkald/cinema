@@ -25,7 +25,7 @@ And following controllers for communications with front-end part:
 <li>AuthenticationController - to register new user (by default user will have USER role)</li>
 <li>InjectController - by running server inject ADMIN and USER roles and user with ADMIN role in to DB</li>
 <li>UserController - responsive for get authorized user and get user by email</li>
-<li>ShoppingCartController, OrderController, MovieSessionController, MovieController, CinemaHallController - to get all and create matching models</li>
+<li>ShoppingCartController, OrderController, MovieSessionController, MovieController, CinemaHallController - to get all and create appropriate models</li>
 </ul>
 <a name="project_structure"></a><h2>Project Structure</h2>
 <ul>
