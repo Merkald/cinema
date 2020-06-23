@@ -2,7 +2,6 @@ package cinema.controller;
 
 import cinema.model.Role;
 import cinema.model.User;
-import cinema.service.AuthenticationService;
 import cinema.service.RoleService;
 import cinema.service.UserService;
 import java.util.Set;
@@ -15,16 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/inject")
 public class InjectController {
     private final RoleService roleService;
-    private final AuthenticationService authenticationService;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
     public InjectController(RoleService roleService,
-                            AuthenticationService authenticationService,
                             UserService userService,
                             PasswordEncoder passwordEncoder) {
         this.roleService = roleService;
-        this.authenticationService = authenticationService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }

@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Optional<User> getByEmail(String email) {
         Session session = sessionFactory.openSession();
         try {
             return Optional.ofNullable(session
@@ -53,7 +53,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
+    public Optional<User> getByLogin(String login) {
         Session session = sessionFactory.openSession();
         try {
             return Optional.ofNullable(session

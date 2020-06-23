@@ -32,7 +32,7 @@ public class OrderController {
     @GetMapping
     public List<OrderResponseDto> getAll(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return orderService.getOrderHistory(userService.findByLogin(userDetails.getUsername()))
+        return orderService.getOrderHistory(userService.getByLogin(userDetails.getUsername()))
                 .stream()
                 .map(o -> orderMaper.transfer(o))
                 .collect(Collectors.toList());
@@ -40,6 +40,7 @@ public class OrderController {
 
     @PostMapping
     public void complete(@RequestBody ShoppingCartRequestDto shoppingCartRequestDto) {
+
         orderService.completeOrder(userService.get(shoppingCartRequestDto.getUserId()));
     }
 }

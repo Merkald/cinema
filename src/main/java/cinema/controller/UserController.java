@@ -25,7 +25,7 @@ public class UserController {
 
     @GetMapping("/by-email")
     public UserResponseDto get(@RequestParam(name = "email") String email) {
-        return userMaper.transfer(userService.findByEmail(email));
+        return userMaper.transfer(userService.getByEmail(email));
     }
 
     @GetMapping
@@ -34,7 +34,7 @@ public class UserController {
         Object princeple = authentication.getPrincipal();
         if (princeple instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) princeple;
-            return userMaper.transfer(userService.findByLogin(userDetails.getUsername()));
+            return userMaper.transfer(userService.getByLogin(userDetails.getUsername()));
         }
         throw new NotFoundException("user doesnt exist");
     }

@@ -6,9 +6,9 @@ import java.util.Optional;
 public interface UserDao {
     User add(User user);
 
-    Optional<User> findByEmail(String email);
+    Optional<User> getByEmail(String email);
 
-    Optional<User> findByLogin(String login);
+    Optional<User> getByLogin(String login);
 
     Optional<User> get(Long id);
 }

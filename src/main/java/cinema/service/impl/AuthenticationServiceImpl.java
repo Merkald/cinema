@@ -1,6 +1,5 @@
 package cinema.service.impl;
 
-import cinema.exeptions.AuthenticationExeption;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.service.RoleService;
@@ -25,15 +24,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.shoppingCartService = shoppingCartService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    @Override
-    public User login(String email, String password) throws AuthenticationExeption {
-        User user = userService.findByEmail(email);
-        if (passwordEncoder.matches(password,user.getPassword())) {
-            return user;
-        }
-        throw new AuthenticationExeption("Passwords are not equals");
     }
 
     @Override
