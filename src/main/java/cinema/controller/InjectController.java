@@ -2,12 +2,10 @@ package cinema.controller;
 
 import cinema.model.Role;
 import cinema.model.User;
-import cinema.service.AuthenticationService;
 import cinema.service.RoleService;
 import cinema.service.UserService;
 import java.util.Set;
 import javax.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,14 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/inject")
 public class InjectController {
-    @Autowired
-    private RoleService roleService;
-    @Autowired
-    private AuthenticationService authenticationService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+
+    public InjectController(RoleService roleService,
+                            UserService userService,
+                            PasswordEncoder passwordEncoder) {
+        this.roleService = roleService;
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostConstruct
     public void injectData() {
@@ -41,23 +42,13 @@ public class InjectController {
 
     private void injectUsers() {
         User admin = new User();
-        admin.setEmail("em@ail");
-        admin.setPassword(passwordEncoder.encode("q"));
-        admin.setLogin("q");
-        admin.setFirstName("Name_");
-        admin.setLastName("LName_");
+        admin.setEmail("admin@email");
+        admin.setPassword(passwordEncoder.encode("admin"));
+        admin.setLogin("admin");
+        admin.setFirstName("FName");
+        admin.setLastName("LName");
         admin.setAge(10);
         admin.setRoles(Set.of(roleService.getRoleByName("ADMIN")));
         userService.add(admin);
-        for (int i = 0; i < 4; i++) {
-            User user = new User();
-            user.setEmail("email_" + i);
-            user.setPassword("password_" + i);
-            user.setLogin("login_" + i);
-            user.setFirstName("Name_" + i);
-            user.setLastName("LName_" + i);
-            user.setAge(i * 10);
-            authenticationService.register(user);
-        }
     }
 }

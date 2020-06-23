@@ -3,13 +3,15 @@ package cinema.service.impl;
 import cinema.dao.UserDao;
 import cinema.model.User;
 import cinema.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public User add(User user) {
@@ -17,19 +19,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        if (userDao.findByEmail(email).isEmpty()) {
+    public User getByEmail(String email) {
+        if (userDao.getByEmail(email).isEmpty()) {
             throw new RuntimeException("user doesnt exist");
         }
-        return userDao.findByEmail(email).get();
+        return userDao.getByEmail(email).get();
     }
 
     @Override
-    public User findByLogin(String login) {
-        if (userDao.findByLogin(login).isEmpty()) {
+    public User getByLogin(String login) {
+        if (userDao.getByLogin(login).isEmpty()) {
             throw new RuntimeException("user doesnt exist");
         }
-        return userDao.findByLogin(login).orElseThrow();
+        return userDao.getByLogin(login).orElseThrow();
     }
 
     @Override

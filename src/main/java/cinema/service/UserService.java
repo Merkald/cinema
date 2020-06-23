@@ -5,9 +5,9 @@ import cinema.model.User;
 public interface UserService {
     User add(User user);
 
-    User findByEmail(String email);
+    User getByEmail(String email);
 
-    User findByLogin(String login);
+    User getByLogin(String login);
 
     User get(Long id);
 }

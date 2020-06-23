@@ -7,13 +7,15 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public UserDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public User add(User user) {
@@ -35,7 +37,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Optional<User> getByEmail(String email) {
         Session session = sessionFactory.openSession();
         try {
             return Optional.ofNullable(session
@@ -51,7 +53,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
+    public Optional<User> getByLogin(String login) {
         Session session = sessionFactory.openSession();
         try {
             return Optional.ofNullable(session
